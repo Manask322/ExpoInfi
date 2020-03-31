@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block content  %}
+
+<style>
+    td{
+        color: blue;
+        font-weight: bold;
+        text-align: center;
+    }
+    th{
+        text-align: center;
+    }
+    #gameback{
+        background-image: url("https://media.istockphoto.com/vectors/number-and-math-symbol-in-color-led-font-on-black-background-vector-id885855890?k=6&m=885855890&s=170667a&w=0&h=Ir_LtUsRAoxDOuHFt8aG0NVLp-RvJVbfNkAJIe_x_KM=");
+        opacity: 90%;
+    }
+</style>
+
+<div class="container-fluid" id="gameback">
+    <div class="container" style="margin: 2%;margin-left: 13%;border-style: groove;width: 70%;background-color: white;opacity: 95%;padding-top: 1%;">
+        <div class="row" style="padding-top: 5%;">
+            <div class="col" style="text-align: center;">
+                <p>
+                    Level
+                </p>
+                <p style="border-style:double">
+                    {{current_level}}
+                </p>
+            </div>
+            <div class="col" style="text-align: center; padding-top: 1%;">
+                <p>
+                    <a class="btn btn-primary" href="{% url 'games' %}" role="button">Reset Game</a>
+                </p>            
+            </div>
+            <div class="col" style="text-align: center;">
+                <p>
+                    Current Score
+                </p>
+                <p style="border-style:double">
+                    {{current_score}}
+                </p>
+            </div>
+        </div>
+        <table  class="table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Number of digits</th>
+                    <th>Flash</th>
+                    <th>Number of numbers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{size}}
+                    </td>
+                    <td>
+                        {{flash}} ms
+                    </td>
+                    <td>
+                        {{numbers}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div style="text-align: center;">
+            <div class="before_start" style="text-align: center; ">
+                <h1></h1>
+            </div>
+            <div class="number_display" style="text-align: center;">
+                <p style="font-size: 80px;"></p>
+            </div>
+            <div id="result_div" style="text-align: center;">
+                
+                    <label for="answer">Enter Your Answer : </label>
+                    <input type="number" name="answer" id="ans">
+                    <button id="checkbtn" onclick="checkAnswer()" class="btn btn-dark">Submit</button>
+                
+            </div>
+            <div class="result" style="text-align: center;">
+                <p>
+                    NULL
+                </p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+
+<script>
+
+    $(window).bind('beforeunload', function(){
+        return "msg";
+    });
+    
+    function randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    function get_random_number(size_of_digit){
+        size_of_digit = Number(size_of_digit)
+        max = 10
+        while( size_of_digit > 1 ){
+            max *= 10
+            size_of_digit -= 1
+        }
+        min = max/10
+        max -= 1
+        return randomInteger(min,max)
+    }
+    sum = 0
+    before_start_function()
+    num_array = []
+    old_rand_num = -1
+    for (let num = 0; num < {{numbers}}; num++) {
+        
+        rand_num = get_random_number({{size}})
+        while( true ){
+            if(old_rand_num == rand_num){
+                rand_num = get_random_number({{size}})
+            }
+            else{
+                break
+            }
+        }
+        old_rand_num = rand_num
+        num_array.push(rand_num)
+    }
+
+    result_div_ele = document.getElementById("result_div");
+    result_div_ele.style.display = "none";
+
+    result_ele = document.getElementsByClassName("result")[0];
+    result_ele.style.display = "none";
+    async function display_numbers(){    
+        for (let index = 0; index < num_array.length; index++) {
+            document.getElementsByClassName("number_display")[0].childNodes[1].innerHTML = num_array[index];
+            sum += num_array[index];
+            await sleep({{flash}});
+        }
+    
+        before_start_ele = document.getElementsByClassName("number_display")[0];
+        before_start_ele.style.display = "none";
+        result_div_ele.style.display = "block";
+    }
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))                   ;
+    }
+    async function before_start_function(){
+        for (let index = 3; index > -1 ; index--) {
+            if( index == 0 ){
+                document.getElementsByClassName("before_start")[0].childNodes[1].innerHTML =  "<span style=\"color:green\" >Start !!</span>";
+            }
+            else{
+                document.getElementsByClassName("before_start")[0].childNodes[1].innerHTML =   "<span style=\"color:yellow\">"+ index+"</span>" ;
+            }
+            await sleep(1000);
+        }
+        before_start_ele = document.getElementsByClassName("before_start")[0]
+        before_start_ele.style.display = "none";
+        display_numbers();
+    }
+
+    async function checkAnswer(){
+        result_ele.style.display = "block";
+        current_answer = document.getElementById('ans').value;
+        if(Number(current_answer) == sum){
+            document.getElementsByClassName("result")[0].childNodes[1].innerHTML = "<h1><span style=\"color : green\">Correct !!!</h1><h2>Advancing to next Level</span></h2>"
+            await sleep(2000)
+            location_string = location.href
+            location_string = location_string.substr(0,location_string.length - 1);
+            location_string += String({{current_level}} + 1)
+            $(window).unbind('beforeunload');
+            location.replace(location_string);
+        }
+        else{
+
+            location_string = location.href
+            location_string = location_string.substr(0,location_string.length - 1);
+            location_string += String({{current_level}} + 1)
+            start_url = location_string.substr(0,location_string.length-3)
+            end_url = location_string.substr(location_string.length-3)
+            attemps = parseInt(end_url[0])
+            attemps += 1
+            end_url = end_url.substr(0,0) + attemps + end_url.substr(1);
+            location_string = start_url + end_url
+            document.getElementsByClassName("result")[0].childNodes[1].innerHTML = "<h1><span style=\"color : red\">InCorrect</span></h1>"
+            await sleep(2000)
+            $(window).unbind('beforeunload');
+            location.replace(location_string);
+        }
+        
+    }
+
+</script>
+{% endblock %}

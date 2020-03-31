@@ -1,0 +1,44 @@
+{% extends "base.html" %} 
+
+{% block content  %}
+
+
+<div style="margin: 7%;padding:1%; border-radius: 5%;border: groove;">
+    <div class="container">
+        <p>
+            {{current_user.user.username}} Details
+        </p>
+    </div>
+    <hr style="border:double black;">
+    <div class="container">
+        <div class="row" style="padding: 1%;">
+            <div class="col">
+                <p>
+                    Name : {{current_user.user.first_name}} {{current_user.user.last_name}}
+                </p>
+            </div>
+            <div class="col">
+                <p>
+                    High Score : {{current_user.high_score}}
+                </p>
+            </div>
+            <div class="col">
+                <p>
+                    Last Score : {{current_user.current_score}} 
+                </p>
+            </div>
+        </div>
+        <div class="row" style="padding: 1%;">
+            <div class="col">
+                Gender : {{current_user.gender}}
+            </div>
+            <div class="col">
+                Age : {{current_user.age}}
+            </div>
+            <div class="col">
+                Last Played : {{current_user.date}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

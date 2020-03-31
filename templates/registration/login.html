@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content  %}
+
+{% load socialaccount %}
+
+<style>
+  .row{
+    align-items: center;
+    margin-top: 15%;
+    margin-left: 15%;
+  }
+</style>
+
+<div class="container">
+  <div style="padding-top: 14%;">
+    <div style="text-align: center;">  
+      All the users need to login to the Application to perform the task.<br>
+Logging in to the Application helps to manage high scores and equating users abilities with others. 
+    </div>
+    <div style="padding:2% ; text-align: center;">
+      {% if user.is_authenticated %}
+        <p>Welcome {{ user.username }} !!!</p>
+        <p><a href="{% url 'account_logout' %}">Log out</a>
+      {% else %}
+            <a class="btn btn-outline-dark" href="{% provider_login_url 'google' %}" role="button" style="text-transform:none">
+              <img width="30px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+              Login 
+            </a>
+      {% endif %}
+    </div>
+  </div>
+  <div>
+
+  </div>
+</div>
+
+
+{% endblock %}

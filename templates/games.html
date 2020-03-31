@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="container" style="padding: 5%;padding-top: 3%;">
+    <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th colspan="2" style="text-align:center;">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align:justify;">
+                    <b>Flash Game</b>
+                </td>
+                <td style="text-align: center;">
+                   <a name="start_game" id="start_game" class="btn btn-primary" href="{% url 'start_game' %}" role="button">Start Game</a> 
+                </td>
+                <td style="text-align: center;">
+                   <a name="start_game" id="start_game" class="btn btn-primary" href="{% url 'game' attemps current_level %} " role="button">Challenge Mode</a> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div>
+                        <h4>Game Instructions :</h4>
+                        <p>
+                            The objective of the game is to add a series of numbers that are flashed on the screen with a time interval. 
+                        </p>
+                        <p>
+                            Parameters of difficulty :
+                            <ol>
+                                <li>The digits in each number flashed,</li>
+                                <li>the time interval between two consecutive flashes</li>
+                                <li>the total number of flashed numbers change with difficulty.</li>
+                            </ol>
+                    
+                        </p>
+                        <p>
+                            There are two modes : 
+                            
+                            <ul>
+                                <li>
+                                    Challenge Mode - where we have multiple levels which I created. (BEGINNERS!)
+                                </li>
+                                <li>
+                                    Custom mode - where you can set the difficulty parameters (After you get a hang of this!)
+                                </li>
+                            </ul>
+                        </p>
+                    </div>                    
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

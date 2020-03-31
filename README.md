@@ -1,1 +1,1 @@
-# ExpoInfi
+# ExploringInfinities
