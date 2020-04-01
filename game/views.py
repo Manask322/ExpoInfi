@@ -113,7 +113,7 @@ def game(request,attemps,level):
         
         user_details = CustomUser.objects.filter(user=request.user).latest('date')
         old_id = user_details.id
-        user_details = CustomUser.objects.get(id=user_details.id)
+        user_details = CustomUser.objects.get(id=old_id)
         level_details = level_list[game_details.current_level]
         game_details.current_level += 1
         size = level_details[0]
