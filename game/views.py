@@ -110,8 +110,10 @@ def game(request,attemps,level):
             new_user.user = User.objects.get(username=request.user)
             new_user.date = timezone.localtime()
             new_user.save()
-            
-        user_details = CustomUser.objects.latest('user','date')
+        
+        user_details = CustomUser.objects.filter(user=request.user).latest('date')
+        old_id = user_details.id
+        user_details = CustomUser.objects.get(id=user_details.id)
         level_details = level_list[game_details.current_level]
         game_details.current_level += 1
         size = level_details[0]
