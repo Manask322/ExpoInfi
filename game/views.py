@@ -74,7 +74,7 @@ def start_game(request):
 def game(request,attemps,level):
     
     if int(level) > 25 :
-        return redirect(home)
+        return redirect(profile)
     if not request.session.get('attemps'):
         request.session['attemps'] = attemps
     if request.POST:
@@ -121,7 +121,7 @@ def game(request,attemps,level):
         if (game_details.current_level + 1 ) != int(level) and game_details.current_level != 0:
             return redirect(games)
         if( int(attemps) >= 2 ):
-            return redirect(games)
+            return redirect(profile)
         if game_details.current_level == 0 or int(level) == 1:
             if request.session['played'] == 1:
                 return redirect(games)
