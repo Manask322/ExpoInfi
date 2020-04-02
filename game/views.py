@@ -7,7 +7,7 @@ from users.models import CustomUser
 from .models import Game
 from allauth.socialaccount.models import SocialAccount
 from django.utils import timezone
-
+from users.views import profile
 
 level_list = [['1', '1500', '3'], ['1', '1500', '5'], ['1', '1500', '10'], 
             ['1', '1500', '15'], ['1', '1500', '20'], ['1', '1000', '5'], 
