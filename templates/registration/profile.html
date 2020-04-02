@@ -3,7 +3,14 @@
 {% block content  %}
 
 
-<div style="margin: 7%;padding:1%; border-radius: 5%;border: groove;">
+<div style="margin: 7%;padding:1%; border-radius: 5%;border: groove;background-color: rgb(236, 221, 221);">
+    <div class="cantainer" style="text-align: center;background-color: rgb(146, 131, 131);border-radius: 5%">
+            <div>
+                <h1>
+                    Your Rank : <span style="font-size: 300%;">#{{rank}}</span> 
+                </h1>
+            </div>
+    </div>
     <div class="container">
         <p>
             {{current_user.user.username}} Details
@@ -33,7 +40,12 @@
                 Gender : {{current_user.gender}}
             </div>
             <div class="col">
-                Age : {{current_user.age}}
+                Age : 
+                {% if current_user.age == -1 %}
+                    N/A
+                {% else %}
+                    {{current_user.age}}
+                {% endif %}
             </div>
             <div class="col">
                 Last Played : {{current_user.date}}
@@ -41,4 +53,66 @@
         </div>
     </div>
 </div>
+
+<section class="container" style="margin-top: 2%;background-color: rgb(236, 221, 221);border-radius: 5%;border: groove;">
+    <div style="text-align: center;">
+        <h1>Your scores :</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="dataTables_wrapper no-footer container">
+            Flash Game :
+            <hr>
+            <table id="my-table" class=" table display responsive nowrap" cellspacing="0" width="100%">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width: 1%;">Id</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <th>{{ forloop.counter}}</th>
+                        <th>{{user.user.username}}</th>
+                        <th>{{user.high_score}}</th>
+                        <th>{% if user.age == -1 %}
+                            N/A
+                            {% else %}
+                          {{user.age}}
+                        {% endif %}
+                        </th>
+                        <th>
+                            {% if  user.gender %}
+                                {{user.gender}}
+                            {% else %}
+                                N/A
+                            {% endif %}
+    
+                        </th>
+                        <th>{{user.date.date}}</th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+<script>
+    function loginalert(){
+        window.alert("Please Log IN to Start the Game !!")
+    }
+    function gohome(){
+        location.replace("http://neelakanthabhanu.com/")
+    }
+    $(document).ready(function() {
+        $('#my-table').DataTable({
+            responsive: true
+        });
+    } );
+</script>
 {% endblock %}

@@ -7,8 +7,18 @@ from .models import CustomUser
 from game.views import home
 
 def profile(request):
-    current_user = CustomUser.objects.filter(user__username=request.user).order_by('-high_score')
+    
+    all_users = CustomUser.objects.all()
+    if len(all_users) == 0:
+        return redirect(home)
+    all_users = all_users.order_by('-high_score')
+    index = 1 
+    for user in all_users :
+        if user.user.username == request.user.username:
+            break
+        index += 1
+
+    current_user = all_users.filter(user=request.user)
     if len(current_user) == 0 :
         return redirect(home)
-    current_user = current_user[0]
-    return render(request,'registration/profile.html',{'current_user':current_user})
+    return render(request,'registration/profile.html',{'rank':index,'current_user':current_user[0],'users':current_user})
