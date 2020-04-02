@@ -165,7 +165,6 @@
             level = {{current_level}} + 1
             end_url = String(level) 
             location_string = start_url + end_url
-            console.log(location_string)
             $(window).unbind('beforeunload');
             location.replace(location_string);
         }
