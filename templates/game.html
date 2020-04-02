@@ -78,6 +78,9 @@
 
 <script>
 
+
+
+
     $(window).bind('beforeunload', function(){
         return "msg";
     });
@@ -156,11 +159,13 @@
             document.getElementsByClassName("result")[0].childNodes[1].innerHTML = "<h1><span style=\"color : green\">Correct !!!</h1><h2>Advancing to next Level</span></h2>"
             await sleep(2000)
             location_string = location.href
-            start_url = location_string.substr(0,29);
-            end_url = location_string.substr(29)
+            size_of_level = (String({{current_level}})).length
+            start_url = location_string.substr(0,location_string.length- size_of_level);
+            end_url = location_string.substr(location_string.length- size_of_level)
             level = {{current_level}} + 1
             end_url = String(level) 
             location_string = start_url + end_url
+            console.log(location_string)
             $(window).unbind('beforeunload');
             location.replace(location_string);
         }
@@ -170,6 +175,7 @@
             location_string = location_string.substr(0,location_string.length - 1);
             location_string += String({{current_level}} + 1)
             start_url = location_string.substr(0,location_string.length-3)
+
             end_url = location_string.substr(location_string.length-3)
             attemps = parseInt(end_url[0])
             attemps += 1
