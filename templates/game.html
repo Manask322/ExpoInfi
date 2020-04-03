@@ -21,13 +21,13 @@
     <div class="container" style="margin-left: 13%;border-style: groove;width: 70%;background-color: white;opacity: 95%;padding-top: 1%;">
         <div class="row" style="width: 100%;margin-left: 3%;">
             <div class="col-sm">
-                <i>Length</i> = <b>{{size}}</b> 
+                <i>Digits</i> = <b>{{size}}</b> 
             </div>
             <div class="col-sm">
-                <i>Flash(ms)</i> = <b>{{flash}} ms</b> 
+                <i>Interval</i> = <b>{{flash}} ms</b> 
             </div>
             <div class="col-sm">
-                <i>Number of numbers</i> = <b>{{numbers}}</b>
+                <i>Length</i> = <b>{{numbers}}</b>
             </div>
         </div>
         <hr>
@@ -38,7 +38,7 @@
             <div class="number_display" style="text-align: center;">
                 <p style="font-size: 110px;"></p>
             </div>
-            <div id="result_div" class="table-responsive" style="text-align: center;">
+            <div id="result_div" class="table-responsive" style="text-align: center;border: solid black;">
                     <label for="answer">Enter Your Answer : </label>
                     <input type="number" name="answer" id="ans">
                     <button id="checkbtn" onclick="checkAnswer()" class="btn btn-dark">Submit</button>
