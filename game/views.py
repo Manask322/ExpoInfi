@@ -73,7 +73,7 @@ def start_game(request):
 
 def game(request,attemps,level):
     
-    if int(level) > 25 :
+    if int(level) > list_length :
         return redirect(profile)
     if not request.session.get('attemps'):
         request.session['attemps'] = attemps
